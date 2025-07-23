@@ -595,7 +595,7 @@ MB_EVENT_HANDLER(mbm_on_send_data)
                 info_ptr->tid_counter = (uint16_t)(info_ptr->index << 8U);
             }
         }
-        drv_obj->event_cbs.mb_sync_event_cb(drv_obj->event_cbs.port_arg, MB_SYNC_EVENT_SEND_OK);
+        //pdrv_ctx->event_cbs.mb_sync_event_cb(pdrv_ctx->event_cbs.port_arg, MB_SYNC_EVENT_SEND_OK);
         mb_drv_lock(ctx);
         drv_obj->mb_node_curr = info_ptr;
         drv_obj->curr_node_index = info_ptr->index;

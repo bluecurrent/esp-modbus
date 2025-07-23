@@ -198,11 +198,9 @@ int port_read_packet(mb_node_info_t *info_ptr)
         if (ret < 0) {
             info_ptr->recv_err = ret;
             return ret;
-        }
-        
-        if (ret != MB_TCP_UID) {
-            ESP_LOGD(TAG, "Socket (#%d)(%s), fail to read modbus header. ret=%d",
-                        info_ptr->sock_id, info_ptr->addr_info.ip_addr_str, ret);
+        } else if (ret != MB_TCP_UID) {
+            ESP_LOGD(TAG, "node #%d, Socket (#%d)(%s), fail to read modbus header, err=%d",
+                        info_ptr->fd, info_ptr->sock_id, info_ptr->addr_info.ip_addr_str, ret);
             info_ptr->recv_err = ERR_VAL;
             return ERR_VAL;
         }
@@ -294,7 +292,7 @@ int port_keep_alive(int sock)
         return -1;
     }
     // Set count of probes before timing out
-    optval = CONFIG_FMB_TCP_CONNECTION_TOUT_SEC;
+    optval = CONFIG_FMB_TCP_KEEP_ALIVE_TOUT_SEC;
     ret = setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &optval, sizeof(optval));
     if (ret != 0) {
         ESP_LOGD(TAG, "Sock %d, set keep alive probes count fail., err = (%d).", sock, ret);
@@ -917,7 +915,7 @@ int port_accept_connection(int listen_sock_id, mb_uid_info_t *info_ptr)
             // Make sure ss_family is valid
             abort();
         }
-        ESP_LOGI(TAG, "Socket (#%d), accept client connection from address[port]: %s[%d]", (int)sock_id, addr_str, info_ptr->port);
+        ESP_LOGI(TAG, "Socket (#%d), accept client connection from address[port]: %s[%u]", (int)sock_id, addr_str, info_ptr->port);
         paddr = strdup(addr_str);
         if (paddr) {
             info_ptr->fd = sock_id;
