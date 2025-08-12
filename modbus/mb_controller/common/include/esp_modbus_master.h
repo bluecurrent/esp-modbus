@@ -136,6 +136,9 @@ typedef enum {
     PARAM_SIZE_I64 = 0x08,                  /*!< Signed integer 64 size */
     PARAM_SIZE_U64 = 0x08,                  /*!< Unsigned integer 64 size */
     PARAM_SIZE_DOUBLE = 0x08,               /*!< Double 64 size */
+
+    // Blue Current edit
+    PARAM_SIZE_ASCII50 = 0x32,              /*!< size of 50 ASCII characters */
     PARAM_MAX_SIZE
 } mb_descr_size_t;
 

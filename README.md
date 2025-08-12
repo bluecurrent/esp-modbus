@@ -1,5 +1,8 @@
 # ESP-Modbus Library
 
+**NOTE**
+To apply our (BlueCurrent) patch on your own repo/fork, run patch -p1 < modbus_master.patch in the root of your repo. (Do copy the file first)
+
 ## Overview
 
 An Espressif ESP-Modbus Library (esp-modbus) is a library to support Modbus communication in the networks based on RS485, WiFi, Ethernet interfaces. The Modbus is a data communications protocol originally published by Modicon (now Schneider Electric) in 1979 for use with its programmable logic controllers (PLCs).
