@@ -450,8 +450,6 @@ MB_EVENT_HANDLER(mbs_on_recv_data)
                     mb_drv_check_suspend_shutdown(ctx);
                     return;
                 }
-                // send receive event to modbus object to get the new data
-                drv_obj->event_cbs.mb_sync_event_cb(drv_obj->event_cbs.port_arg, MB_SYNC_EVENT_RECV_OK);
                 mb_drv_lock(drv_obj);
                 uint16_t msg_id = 0;
                 int node_id = 0;
@@ -466,6 +464,8 @@ MB_EVENT_HANDLER(mbs_on_recv_data)
                              pnode->addr_info.ip_addr_str, (unsigned)msg_id);
                 }
                 mb_drv_unlock(drv_obj);
+                // send receive event to modbus object to get the new data
+                drv_obj->event_cbs.mb_sync_event_cb(drv_obj->event_cbs.port_arg, MB_SYNC_EVENT_RECV_OK);
             } else {
                 if (transaction_item_get_state(item) != TRANSMITTED) {
                     // Transaction procesing is ongoing, just delete expired transactions
